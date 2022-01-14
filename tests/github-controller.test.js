@@ -41,6 +41,7 @@ describe('github controller', () => {
 
             axios.get.mockResolvedValueOnce(mockedCommitRes);
             const result = await fetchNumberOfCommits(mockUser, 'https://api.github.com/repos/mempool/mempool/pulls/1142');
+
             expect(axios.get).toHaveBeenCalledWith('https://api.github.com/repos/mempool/mempool/pulls/1142');
             expect(result).toEqual(mockedReturnObj);
         });
