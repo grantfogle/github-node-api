@@ -15,7 +15,7 @@
 <body>
     <section class="container">
         <h2>Get Commits for Open Pull Requests</h2>
-        <form class="form-inline">
+        <form class="form-inline" method="POST" action="/repo-open-prs">
             <div class="form-group">
                 <label for="github-input">Please enter repo url</label>
                 <input type="text" class="form-control" id="github-input" name="repo"
@@ -27,6 +27,24 @@
         </form>
     </section>
 
+    <% if(openPrs.length > 0){ %>
+    <section class="container">
+        <table class="table">
+            <tr>
+                <th>Username</th>
+                <th>API PR Url</th>
+                <th>Commits</th>
+            </tr>
+            <% for(var i=0; i < openPrs.length; i++) { %>
+            <tr>
+                <td><%= openPrs[i].user.login %></td>
+                <td><%= openPrs[i].commitsUrl %></td>
+                <td><%= openPrs[i].commits %></td>
+            </tr>
+            <% } %>
+        </table>
+    </section>
+    <% } %>
 </body>
 
 </html>

@@ -9,9 +9,28 @@ app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
     res.render("home", {
-        title: "Grant's PR Fetcher",
+        title: "Grant's Github Repo Fetcher",
         openPrs: []
     });
 });
+
+app.post("/repo-open-prs", async (req, res) => {
+    const openPrsWithCommitCount = [
+        {
+            user: {
+                login: 'grant',
+            },
+            commitUrl: 'grantcommiturl.com/',
+            commits: 5
+        }
+    ];
+
+    res.render("home", {
+        title: "Grant's Github Repo Fetcher",
+        openPrs: openPrsWithCommitCount
+    });
+
+});
+
 
 app.listen(PORT, () => console.log(`it's alive on http://localhost:${PORT}`));
