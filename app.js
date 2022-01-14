@@ -1,8 +1,13 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
+const { fetchOpenPrs } = require("./controllers/github-controller");
 
 const path = require("path");
 const PORT = 8080;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -15,13 +20,15 @@ app.get("/", (req, res) => {
 });
 
 app.post("/repo-open-prs", async (req, res) => {
+    const { repo } = req.body;
+    fetchOpenPrs(repo);
     const openPrsWithCommitCount = [
         {
             user: {
                 login: 'grant',
             },
-            commitUrl: 'grantcommiturl.com/',
-            commits: 5
+            commits: 5,
+            commitsUrl: 'grantcommiturl.com/',
         }
     ];
 
