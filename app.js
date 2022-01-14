@@ -22,6 +22,11 @@ app.get("/", (req, res) => {
 app.post("/repo-open-prs", async (req, res) => {
     const { repo } = req.body;
     fetchOpenPrs(repo);
+    await fetchOpenPrs(repo).then(response => {
+        console.log(response);
+        return response;
+    });
+
     const openPrsWithCommitCount = [
         {
             user: {

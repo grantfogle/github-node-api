@@ -1,3 +1,5 @@
+const axios = require('axios')
+
 function cleanUpUrl(repoUrl) {
     let cleanedUpUrl = repoUrl;
 
@@ -19,7 +21,14 @@ function cleanUpUrl(repoUrl) {
 
 function fetchOpenPrs(gitRepoUrl) {
     const cleanFetchUrl = cleanUpUrl(gitRepoUrl);
-    console.log(cleanFetchUrl)
+
+    return axios.get(cleanFetchUrl)
+        .then(response => {
+            return response;
+        })
+        .catch(err => {
+            console.error("Request failed", err);
+        });
 }
 
 module.exports = { fetchOpenPrs, cleanUpUrl };
