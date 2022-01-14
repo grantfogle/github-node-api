@@ -41,7 +41,7 @@ app.post("/repo-open-prs", async (req, res, next) => {
             title: "Grant's PR Fetcher",
             openPrs: openPrsWithCommitCount
         });
-    }, 1000);
+    }, 1500);
 });
 
 

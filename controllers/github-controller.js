@@ -32,19 +32,14 @@ async function fetchOpenPrs(gitRepoUrl) {
 }
 
 async function fetchNumberOfCommits(user, commitsUrl) {
-    let retrievedCommitCountObj;
-    await axios.get(commitsUrl)
+    return axios.get(commitsUrl)
         .then(response => {
             const { commits } = response.data;
             return { user, commitsUrl, commits };
         })
-        .then(formattedCommitObj => {
-            retrievedCommitCountObj = formattedCommitObj;
-        })
         .catch(err => {
             console.error("Error fetching number of commits", err);
         });
-    return retrievedCommitCountObj;
 }
 
 
