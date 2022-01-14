@@ -7,16 +7,16 @@ function cleanUpUrl(repoUrl) {
         cleanedUpUrl = cleanedUpUrl.replace('.com', '.com/repos');
     }
 
-    if (!cleanedUpUrl.includes("https://")) {
-        cleanedUpUrl = "https://api." + cleanedUpUrl;
+    if (!cleanedUpUrl.includes('https://')) {
+        cleanedUpUrl = 'https://api.' + cleanedUpUrl;
     } else {
-        cleanedUpUrl = cleanedUpUrl.replace("https://", "https://api.");
+        cleanedUpUrl = cleanedUpUrl.replace('https://', 'https://api.');
     }
 
-    if (cleanedUpUrl.charAt(cleanedUpUrl.length - 1) !== "/") {
-        cleanedUpUrl += "/";
+    if (cleanedUpUrl.charAt(cleanedUpUrl.length - 1) !== '/') {
+        cleanedUpUrl += '/';
     }
-    return cleanedUpUrl += "pulls?q=is%3Aopen";
+    return cleanedUpUrl += 'pulls?q=is%3Aopen';
 }
 
 async function fetchOpenPrs(gitRepoUrl) {
@@ -27,7 +27,7 @@ async function fetchOpenPrs(gitRepoUrl) {
             return response;
         })
         .catch(err => {
-            console.error("Error fetching open prs", err);
+            console.error('Error fetching open prs', err);
         });
 }
 
@@ -38,7 +38,7 @@ async function fetchNumberOfCommits(user, commitsUrl) {
             return { user, commitsUrl, commits };
         })
         .catch(err => {
-            console.error("Error fetching number of commits", err);
+            console.error('Error fetching number of commits', err);
         });
 }
 

@@ -1,19 +1,19 @@
-const axios = require("axios");
-const { fetchOpenPrs, fetchNumberOfCommits, cleanUpUrl } = require("../controllers/github-controller");
+const axios = require('axios');
+const { fetchOpenPrs, fetchNumberOfCommits, cleanUpUrl } = require('../controllers/github-controller');
 
-jest.mock("axios");
+jest.mock('axios');
 
 describe('github controller', () => {
 
-    describe("when cleanUpUrl is called", () => {
-        it("should return cleaned up url", async () => {
-            const testCleanUrl = cleanUpUrl("github.com/mempool/mempool");
-            expect(testCleanUrl).toEqual("https://api.github.com/repos/mempool/mempool/pulls?q=is%3Aopen");
+    describe('when cleanUpUrl is called', () => {
+        it('should return cleaned up url', async () => {
+            const testCleanUrl = cleanUpUrl('github.com/mempool/mempool');
+            expect(testCleanUrl).toEqual('https://api.github.com/repos/mempool/mempool/pulls?q=is%3Aopen');
         });
     });
 
-    describe("when fetchOpenPrs is called", () => {
-        it("should return github response", async () => {
+    describe('when fetchOpenPrs is called', () => {
+        it('should return github response', async () => {
             const mockedRepoResponse = [
                 {
                     user: { login: 'grantfogle' },
@@ -29,13 +29,13 @@ describe('github controller', () => {
         });
     });
 
-    describe("when fetchNumberOfCommits is called", () => {
-        it("should return user obj with number of commits", async () => {
+    describe('when fetchNumberOfCommits is called', () => {
+        it('should return user obj with number of commits', async () => {
             const mockUser = { login: 'grantfogle' };
             const mockedReturnObj = {
                 user: { login: 'grantfogle' },
                 commitsUrl: 'https://api.github.com/repos/mempool/mempool/pulls/1142',
-                "commits": 4,
+                'commits': 4,
             };
             const mockedCommitRes = { data: { commits: 4 } }
 

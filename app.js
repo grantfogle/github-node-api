@@ -1,33 +1,33 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
-const { fetchOpenPrs, fetchNumberOfCommits } = require("./controllers/github-controller");
+const bodyParser = require('body-parser');
+const { fetchOpenPrs, fetchNumberOfCommits } = require('./controllers/github-controller');
 
-const path = require("path");
+const path = require('path');
 const PORT = 8080;
-const ejsTitle = "Grant's Github Repo Fetcher"
+const ejsTitle = 'Grant\'s Github Repo Fetcher'
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.get("/", (req, res) => {
-    res.render("home", {
+app.get('/', (req, res) => {
+    res.render('home', {
         title: ejsTitle,
         openPrs: []
     });
 });
 
-app.get("/repo-open-prs", (req, res) => {
-    res.render("home", {
+app.get('/repo-open-prs', (req, res) => {
+    res.render('home', {
         title: ejsTitle,
         openPrs: []
     });
 });
 
-app.post("/repo-open-prs", async (req, res, next) => {
+app.post('/repo-open-prs', async (req, res, next) => {
     const { repo } = req.body;
     let openPrsWithCommitCount = [];
 
@@ -43,11 +43,11 @@ app.post("/repo-open-prs", async (req, res, next) => {
             });
         }
     }).catch(err => {
-        console.error("Error fetching open prs and commits", err);
+        console.error('Error fetching open prs and commits', err);
     });
 
     setTimeout(() => {
-        res.render("home", {
+        res.render('home', {
             title: ejsTitle,
             openPrs: openPrsWithCommitCount
         });
