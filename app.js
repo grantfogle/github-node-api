@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const { fetchOpenPrs } = require("./controllers/github-controller");
+const { fetchOpenPrs, fetchNumberOfCommits } = require("./controllers/github-controller");
 
 const path = require("path");
 const PORT = 8080;
@@ -19,29 +19,29 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post("/repo-open-prs", async (req, res) => {
+app.post("/repo-open-prs", async (req, res, next) => {
     const { repo } = req.body;
-    fetchOpenPrs(repo);
+    let openPrsWithCommitCount = [];
+
     await fetchOpenPrs(repo).then(response => {
-        console.log(response);
         return response;
-    });
-
-    const openPrsWithCommitCount = [
-        {
-            user: {
-                login: 'grant',
-            },
-            commits: 5,
-            commitsUrl: 'grantcommiturl.com/',
+    }).then(repoInfo => {
+        if (repoInfo) {
+            return repoInfo.data.map(openPR => {
+                const { user, url } = openPR;
+                return fetchNumberOfCommits(user, url).then(commitRes => {
+                    openPrsWithCommitCount.push(commitRes);
+                });
+            });
         }
-    ];
-
-    res.render("home", {
-        title: "Grant's Github Repo Fetcher",
-        openPrs: openPrsWithCommitCount
     });
 
+    setTimeout(() => {
+        res.render("home", {
+            title: "Grant's PR Fetcher",
+            openPrs: openPrsWithCommitCount
+        });
+    }, 1000);
 });
 
 

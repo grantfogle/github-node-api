@@ -19,7 +19,7 @@ function cleanUpUrl(repoUrl) {
     return cleanedUpUrl += "pulls?q=is%3Aopen";
 }
 
-function fetchOpenPrs(gitRepoUrl) {
+async function fetchOpenPrs(gitRepoUrl) {
     const cleanFetchUrl = cleanUpUrl(gitRepoUrl);
 
     return axios.get(cleanFetchUrl)
@@ -27,8 +27,25 @@ function fetchOpenPrs(gitRepoUrl) {
             return response;
         })
         .catch(err => {
-            console.error("Request failed", err);
+            console.error("Error fetching open prs", err);
         });
 }
 
-module.exports = { fetchOpenPrs, cleanUpUrl };
+async function fetchNumberOfCommits(user, commitsUrl) {
+    let retrievedCommitCountObj;
+    await axios.get(commitsUrl)
+        .then(response => {
+            const { commits } = response.data;
+            return { user, commitsUrl, commits };
+        })
+        .then(formattedCommitObj => {
+            retrievedCommitCountObj = formattedCommitObj;
+        })
+        .catch(err => {
+            console.error("Error fetching number of commits", err);
+        });
+    return retrievedCommitCountObj;
+}
+
+
+module.exports = { fetchOpenPrs, fetchNumberOfCommits, cleanUpUrl };
